@@ -168,3 +168,4 @@ https://wandb.ai/dnth/yolov5-deepsparse?workspace=user-dnth
 ```
 python detect.py --weights yolov5-deepsparse/yolov5s-sgd/weights/best.pt --source data/pexels-cottonbro-8717592.mp4 --data data/pistols.yaml --imgsz 416 --view-img --nosave --device cpu
 ```
+# yolov5
