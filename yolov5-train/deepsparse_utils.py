@@ -574,7 +574,7 @@ def download_pytorch_model_if_stub(path: str) -> str:
 
 
 _YOLO_CLASSES = [
-    "pistol",
+    "ball",
 ]
 
 
