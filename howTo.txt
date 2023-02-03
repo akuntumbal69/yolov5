@@ -1,0 +1,3 @@
+Run Inference 
+
+cd yolov5-train/ && python annotate.py yolov5-deepsparse/yolov5n-ball/weights/best.onnx --source data/bolaputih.mp4 --engine deepsparse --device cpu --conf-thres 0.7 --image-shape 416 416 --quantized-input

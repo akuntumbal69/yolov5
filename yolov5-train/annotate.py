@@ -129,13 +129,11 @@ from deepsparse_utils import (
 )
 from sparseml.onnx.utils import override_model_batch_size
 
-
 DEEPSPARSE_ENGINE = "deepsparse"
 ORT_ENGINE = "onnxruntime"
 TORCH_ENGINE = "torch"
 
 _LOGGER = logging.getLogger(__name__)
-
 
 def parse_args(arguments=None):
     parser = argparse.ArgumentParser(
@@ -402,7 +400,9 @@ class AverageFPS:
             return 0.0
 
 
+
 def annotate(args):
+    
     save_dir = _get_save_dir(args)
     model, has_postprocessing = _load_model(args)
     loader, saver, is_video = get_yolo_loader_and_saver(
@@ -450,7 +450,7 @@ def annotate(args):
         )
         fps.measure(measured_fps)
         average_fps = fps.calculate()
-        annotated_img = annotate_image(
+        annotated_img,topLeft,bottomRight= annotate_image(
             source_img,
             outputs,
             score_threshold=args.conf_thres,

@@ -614,7 +614,8 @@ def draw_text(
 
     return text_size
 
-
+topLeft=-1
+bottomRight=-1
 def annotate_image(
     img: numpy.ndarray,
     outputs: numpy.ndarray,
@@ -637,7 +638,7 @@ def annotate_image(
     :return: the original image annotated with the given bounding boxes
     """
     img_res = numpy.copy(img)
-
+    global topLeft, bottomRight
     boxes = outputs[:, 0:4]
     scores = outputs[:, 4]
     labels = outputs[:, 5].astype(int)
@@ -645,8 +646,8 @@ def annotate_image(
     scale_y = img.shape[0] / (1.0 * model_input_size[0]) if model_input_size else 1.0
     scale_x = img.shape[1] / (1.0 * model_input_size[1]) if model_input_size else 1.0
 
-    for idx in range(boxes.shape[0]):
-        label = labels[idx].item()
+    for idx in range(boxes.shape[0]): #in this loop, change idx to 0 to make it only detect 1 object
+        label = labels[idx].item() 
         if scores[idx] > score_threshold:
             annotation_text = (
                 f"{_YOLO_CLASSES[label]}: {scores[idx]:.0%}"
@@ -689,16 +690,18 @@ def annotate_image(
                 2,  # thickness
                 cv2.LINE_AA,
             )
-
+        
             # draw bounding box
-            cv2.rectangle(
+            topLeft=((int(left), int(top)))
+            bottomRight=(int(right), int(bottom))
+            rect=cv2.rectangle(
                 img_res,
-                (int(left), int(top)),
-                (int(right), int(bottom)),
+                topLeft,
+                bottomRight,
                 _YOLO_CLASS_COLORS[label],
                 thickness=2,
             )
-
+         
     if images_per_sec is not None:
         draw_text(
             img_res,
@@ -709,7 +712,8 @@ def annotate_image(
             text_color_bg=(255, 255, 255),
             font_thickness=2,
         )
-    return img_res
+
+    return img_res, topLeft, bottomRight
 
 
 def _non_max_suppression(
