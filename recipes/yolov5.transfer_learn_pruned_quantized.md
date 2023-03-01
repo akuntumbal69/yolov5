@@ -16,7 +16,7 @@ limitations under the License.
 
 ---
 # General Epoch/LR Hyperparams
-num_epochs: &num_epochs 240
+num_epochs: &num_epochs 400
 init_lr: &init_lr 0.0032
 final_lr: &final_lr 0.000384
 warmup_epochs: &warmup_epochs 2
